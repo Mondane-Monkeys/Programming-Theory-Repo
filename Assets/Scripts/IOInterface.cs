@@ -13,7 +13,7 @@ public class IOInterface
 {
     private static string gridFilename = "/gridfile.txt";
     private static string valuesFilename = "/valuefile.txt";
-    
+
     //take a grid of abstract tile objects, and stringify, and save
     public static void SaveState(TileState[,] tiles, int days, int money)
     {
@@ -34,7 +34,7 @@ public class IOInterface
         }
         //save to disk
         File.WriteAllText(Application.persistentDataPath + gridFilename, stringified);
-        File.WriteAllText(Application.persistentDataPath + valuesFilename, days+" "+money);
+        File.WriteAllText(Application.persistentDataPath + valuesFilename, days + " " + money);
     }
 
     public static TileState[,] LoadGrid()
@@ -45,16 +45,16 @@ public class IOInterface
         {
             string stringified = File.ReadAllText(filePath);
             string[] split = stringified.Split(' ');
-            
-            if (split.Length < 4 )
+
+            if (split.Length < 4)
             {
                 return null;
             }
-            
+
             int counter = 0; //points to current substring
-            
+
             //getRows and Cols
-            TileState[,] state = new TileState[Int32.Parse(split[counter++]), Int32.Parse(split[counter++])]; 
+            TileState[,] state = new TileState[Int32.Parse(split[counter++]), Int32.Parse(split[counter++])];
 
             //Populate state
             for (int i = 0; i < state.GetLength(0); i++)
@@ -68,21 +68,29 @@ public class IOInterface
         }
         return null;
     }
-    
+
     //get day number and money amount
     public static int[] LoadValues()
     {
-         //load String from disk
+        //load String from disk
         string filePath = Application.persistentDataPath + valuesFilename;
         if (File.Exists(filePath))
         {
             string stringified = File.ReadAllText(filePath);
             string[] split = stringified.Split(' ');
             int counter = 0;
-            
-            int[] values = {Int32.Parse(split[counter++]), Int32.Parse(split[counter++])};
+
+            int[] values = { Int32.Parse(split[counter++]), Int32.Parse(split[counter++]) };
             return values;
         }
         return null;
+    }
+
+    public static void DefaultGame()
+    {
+        string stringified = "10 10 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 0|-1 ";
+        string valueString = "0 400";
+        File.WriteAllText(Application.persistentDataPath + gridFilename, stringified);
+        File.WriteAllText(Application.persistentDataPath + valuesFilename, valueString);
     }
 }
