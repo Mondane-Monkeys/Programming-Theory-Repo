@@ -127,4 +127,8 @@ public class GridManager : MonoBehaviour
             }
         }
     }
+    
+    public void QuitGame(){
+        SceneManager.LoadScene(0);
+    }
 }
