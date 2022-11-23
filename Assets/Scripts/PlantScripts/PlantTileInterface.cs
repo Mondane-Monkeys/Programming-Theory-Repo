@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 //Contains behaviour for non-permenant behaviour...
 public class PlantTileInterface : MonoBehaviour
 {
-    TileState state;
+    protected TileState state;
     Renderer plantRenderer;
     Color defaultColor;
     // Start is called before the first frame update
@@ -33,7 +34,7 @@ public class PlantTileInterface : MonoBehaviour
         state = inState;
     }
     
-    public void Clicked(int seedType){
+    public virtual void Clicked(int seedType){
         if (state.type>=0)
         {
             if (state.canHarvest)

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7830532931373009637}
   - component: {fileID: 814914908456157227}
   - component: {fileID: 1803844620004036985}
-  - component: {fileID: 2282336967526880487}
+  - component: {fileID: -536107616105764692}
   m_Layer: 0
   m_Name: PumpkinFlower
   m_TagString: Untagged
@@ -100,7 +100,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &2282336967526880487
+--- !u!114 &-536107616105764692
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6169876942203484238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eccf0d96e5e7c3c47aac379a6e9c9b54, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d2a2dfbf8ba6b84da4ef51ecf8ac081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8260642329848359322

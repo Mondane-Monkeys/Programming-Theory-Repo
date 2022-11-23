@@ -7,38 +7,11 @@ using System;
 //      contains all variables used in saving and loading data for each tile
 public class TileState : MonoBehaviour
 {
-    public static TileState NewTileState(string stringified, int i, int j){
-        string[] split = stringified.Split('|');
-        int tempAge = Int32.Parse(split[0]);
-        int tempType = Int32.Parse(split[1]);
-        return NewTileState(tempAge, tempType, i, j);
-    }
-    
-    public static TileState NewTileState(int i, int j){
-        return new TileState(0, -1, i, j);
-    }
-    
-    public static TileState NewTileState(int age, int type, int i, int j){
-        switch (type)
-        {
-            case -1:
-                return new TileState(i,j); //dirt pile, default tileState
-            case 0:
-                return new FlowerState(age, type, i, j);
-            case 1:
-                return new PumpkinState(age, type, i, j);
-            default:
-                return new TileState(age, type, i, j);
-        }
-    }
-    
-    
-    
     public int age;
     public int type;
     public bool canHarvest;
     public GameObject plant;
-    private Vector3 position;
+    public Vector3 position;
     
     private float cellWidth = 1.2f;
     private float cellHeight = 1.2f;
@@ -86,7 +59,7 @@ public class TileState : MonoBehaviour
     public void InstantiateTile(){
         if (plant==null)
         {
-            GameObject tile = Instantiate(GridManager.plants[GetPlantModelIndex()], position, new Quaternion());
+            GameObject tile = Instantiate(PlantsEnumMethods.GetPlantModel(age, (PlantsEnum)type, this), position, new Quaternion());
             tile.GetComponent<PlantTileInterface>().SetState(this);
             plant = tile;
         }
@@ -95,40 +68,6 @@ public class TileState : MonoBehaviour
     }
     
     //TODO improve this thing to actually be effective.
-    private int GetPlantModelIndex(){
-        int maturityAge=2; //days from seed to harvest
-        int stages=0; //number of distinct models
-        int startIndex=0; //index of first model of this type
-        
-        switch (type)
-        {
-            case -1: //Not Planted
-                maturityAge = 2;
-                stages = 1;
-                startIndex = 0;
-                age = 0;
-                break;
-            case 0: //Basic flower
-                maturityAge = 5;
-                stages = 3;
-                startIndex = 1;
-                break;
-            case 1: //pumpkin
-                maturityAge = 12;
-                stages = 3;
-                startIndex = 4;
-                break;
-            case 2: //???
-                maturityAge = 2;
-                stages = 3;
-                startIndex = 7;
-                break;
-            default:
-                return 0;
-        }
-        canHarvest = age>=maturityAge;
-        return startIndex + Math.Min(age*(stages-1)/(maturityAge), stages-1);
-    }
     
     public void Harvest(){
         if (canHarvest)
@@ -142,6 +81,20 @@ public class TileState : MonoBehaviour
             plant = null;
             InstantiateTile();
             
+        }
+    }
+
+    public void PartialHarvest(int newAge){
+        if (canHarvest)
+        {
+            FieldCanvas fCanvas = GameObject.Find("Canvas").GetComponent<FieldCanvas>();
+            fCanvas.money+=GetFruitValue();
+            
+            age = newAge;
+            
+            Destroy(plant);
+            plant = null;
+            InstantiateTile();
         }
     }
 
