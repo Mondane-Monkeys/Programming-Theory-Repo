@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2380643732403385850}
   - component: {fileID: 3743214258746752856}
   - component: {fileID: 6797436530498105495}
+  - component: {fileID: 7991641316335817013}
   m_Layer: 0
   m_Name: Dirt Patch
   m_TagString: Untagged
@@ -97,3 +98,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7991641316335817013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6522764811896696911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eccf0d96e5e7c3c47aac379a6e9c9b54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

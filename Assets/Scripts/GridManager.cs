@@ -10,11 +10,13 @@ using UnityEngine.SceneManagement;
 public class GridManager : MonoBehaviour
 {
     public static List<GameObject> plants;
+    public Canvas canvas;
 
-    private const int GridSize = 3;
+    private const int GridSize = 6;
     private float cellWidth = 1;
     private float cellHeight = 1;
-    public GameObject[,] plantGrid; // initially 3x3 of Plots (empty GameObject)
+    
+    public TileState[,] plantGrid; // initially 3x3 of Plots (empty GameObject)
 
     // Start is called before the first frame update
     void Start()
@@ -57,29 +59,28 @@ public class GridManager : MonoBehaviour
 
     void LoadScene()
     {
-        TileState[,] loadedData = IOInterface.LoadState();
-        if (loadedData != null)
+        plantGrid = IOInterface.LoadGrid();
+        if (plantGrid != null)
         {
-            plantGrid = new GameObject[loadedData.GetLength(0), loadedData.GetLength(1)];
-
-            //load plantGrid array
+            //Instantiate plants
             for (int i = 0; i < plantGrid.GetLength(0); i++)
             {
                 for (int j = 0; j < plantGrid.GetLength(1); j++)
                 {
-                    plantGrid[i, j] = loadedData[i, j].InstantiateTile(new Vector3(i * cellWidth, 0, j * cellHeight));
+                    plantGrid[i, j].InstantiateTile();
                 }
             }
         }
         else
         {
             //default grid
-            plantGrid = new GameObject[3, 3];
+            plantGrid = new TileState[GridSize, GridSize];
             for (int i = 0; i < plantGrid.GetLength(0); i++)
             {
                 for (int j = 0; j < plantGrid.GetLength(1); j++)
                 {
-                    plantGrid[i, j] = (new TileState(i * 3 + "|" + 0)).InstantiateTile(new Vector3(i * cellWidth, 0, j * cellHeight));
+                    plantGrid[i, j] = new TileState(0 , -1, i, j);
+                    plantGrid[i, j].InstantiateTile();
                 }
             }
         }
@@ -87,7 +88,8 @@ public class GridManager : MonoBehaviour
 
     void SaveScene()
     {
-        IOInterface.SaveState(plantGrid);
+        FieldCanvas fCanvas = canvas.GetComponent<FieldCanvas>();
+        IOInterface.SaveState(plantGrid, fCanvas.days, fCanvas.money);
     }
 
     public void IncrementDay()
@@ -96,9 +98,11 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < plantGrid.GetLength(1); j++)
             {
-                plantGrid[i, j].GetComponent<TileBehaviour>().IncrementDay();
+                plantGrid[i, j].IncrementDay();
             }
         }
+        
+        canvas.GetComponent<FieldCanvas>().days++;
         
         SaveScene();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -109,14 +113,18 @@ public class GridManager : MonoBehaviour
         {
             for (int j = 0; j < plantGrid.GetLength(1); j++)
             {
-                if(plantGrid[i, j].GetComponent<TileBehaviour>().Harvest()){
-                    plantGrid[i, j] = PlantSeed(-1, i, j);
-                }
+                plantGrid[i, j].Harvest();
             }
         }
     }
     
-    public GameObject PlantSeed(int seedType, int col, int row){
-        return (new TileState(seedType+"|0")).InstantiateTile(new Vector3(col * cellWidth, 0, row * cellHeight));
+    public void PlantAll(){
+        for (int i = 0; i < plantGrid.GetLength(0); i++)
+        {
+            for (int j = 0; j < plantGrid.GetLength(1); j++)
+            {
+                plantGrid[i, j].PlantSeed(Random.Range(-1,2));
+            }
+        }
     }
 }
