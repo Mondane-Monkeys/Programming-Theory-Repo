@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4748483395908454638}
   - component: {fileID: 7401216600690388582}
   - component: {fileID: 345648285337187463}
-  - component: {fileID: 1578309355483248635}
+  - component: {fileID: -1473877638199435113}
   m_Layer: 0
   m_Name: PumpkinSeed
   m_TagString: Untagged
@@ -99,7 +99,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &1578309355483248635
+--- !u!114 &-1473877638199435113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,6 +108,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1485796250627183580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eccf0d96e5e7c3c47aac379a6e9c9b54, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d2a2dfbf8ba6b84da4ef51ecf8ac081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
